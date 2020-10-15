@@ -1,0 +1,26 @@
+# Selenium
+
+- Selenium은 여러 언어에서 웹 드라이버를 통해 웹 자동화 테스트 혹은 웹 자동화를 도와주는 라이브러리
+- 즉, 다양한 플랫폼에서 브라우저 자동화를 지원해주는 라이브러리
+- 지원 브라우저
+  - Firefox
+  - Internet Explorer
+  - Safari
+  - Opera
+  - Chrome
+- 지원 OS
+  - Microsoft Windows
+  - Apple OS X
+  - Linux
+- 지원 언어
+  - 프로그래밍 언어는 Selenium **드라이버**를 통해 지원
+  - C#
+  - Haskell
+  - Java
+  - JavaScript
+  - Objective-C
+  - Perl
+  - PHP
+  - Python
+  - R
+  - Ruby
