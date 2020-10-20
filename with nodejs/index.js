@@ -2,12 +2,28 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
 const cheerio = require('cheerio');
 const request = require('request');
 
-async function example() {
+const readlineSync = require('readline-sync');
+const cron = require('node-cron');
+
+const message = 'enter password: ';
+const options = {
+    hideEchoBack: true,
+    mask: '*'
+};
+
+const id = readlineSync.question('enter id: ');
+const answer = readlineSync.question(message, options);
+
+cron.schedule('*/1 * * * *', () => {
+    example(id, answer);
+})
+
+async function example(userid, userpw) {
     let driver = await new Builder().forBrowser('chrome').build();
 
     await driver.get('https://auth.ncloud.com/nsa/');
-    await driver.findElement(By.id('username')).sendKeys('id', Key.RETURN);
-    await driver.findElement(By.id('passwordPlain')).sendKeys('pw', Key.RETURN);
+    await driver.findElement(By.id('username')).sendKeys(userid, Key.RETURN);
+    await driver.findElement(By.id('passwordPlain')).sendKeys(userpw, Key.RETURN);
 
     var html = await driver.getPageSource();
 
@@ -44,4 +60,3 @@ async function example() {
 
     // console.log(html)
 }
-example();
