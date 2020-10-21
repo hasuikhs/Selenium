@@ -1,6 +1,8 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const cheerio = require('cheerio');
 const request = require('request');
+// exe 실행 되는지 확인 필요 chromedriver.exe 포함 여부
+
 
 const readlineSync = require('readline-sync');
 const cron = require('node-cron');
@@ -33,8 +35,6 @@ async function example(userid, userpw) {
     await driver.findElement(By.css('#app > div > header > div.center-wrap > div.fr > div.util.hidden-sm-down > a')).click();
     var apiKey = await driver.manage().getCookie('ncp');
 
-    console.log(apiKey.value);
-
     const option = {
         uri: 'https://monitoring-api.ncloud.com/monapi/pfmnc',
         method: 'POST',
@@ -53,6 +53,7 @@ async function example(userid, userpw) {
         },
         json: true
     }
+    
     request.post(option, function (error, response, body) {
         console.log(response.body.csv);
     });
