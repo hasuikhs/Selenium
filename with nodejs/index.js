@@ -1,8 +1,5 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
-const cheerio = require('cheerio');
 const request = require('request');
-// exe 실행 되는지 확인 필요 chromedriver.exe 포함 여부
-
 
 const readlineSync = require('readline-sync');
 const cron = require('node-cron');
@@ -20,10 +17,17 @@ cron.schedule('*/1 * * * *', () => {
     example(id, answer);
 })
 
+/*
+1. npm init -> main에 실행 js 입력
+2. npm install nexe -D
+3. scripts에 "build": "nexe" 추가
+4. npm run build
+*/
+
 async function example(userid, userpw) {
     let driver = await new Builder().forBrowser('chrome').build();
 
-    await driver.get('https://auth.ncloud.com/nsa/');
+    await driver.get('https://auth.ncloud.com/nsa/bizspring');
     await driver.findElement(By.id('username')).sendKeys(userid, Key.RETURN);
     await driver.findElement(By.id('passwordPlain')).sendKeys(userpw, Key.RETURN);
 
