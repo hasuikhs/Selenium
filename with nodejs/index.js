@@ -3,7 +3,7 @@ const request = require('request');
 
 const readlineSync = require('readline-sync');
 const cron = require('node-cron');
-
+const testff = require('./test');
 const message = 'enter password: ';
 const options = {
     hideEchoBack: true,
@@ -13,9 +13,11 @@ const options = {
 const id = readlineSync.question('enter id: ');
 const answer = readlineSync.question(message, options);
 
-cron.schedule('*/1 * * * *', () => {
+console.log(testff.test());
+
+// cron.schedule('*/1 * * * *', () => {
     example(id, answer);
-})
+// })
 
 /*
 1. npm init -> main에 실행 js 입력
