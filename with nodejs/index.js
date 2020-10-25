@@ -3,7 +3,7 @@ const request = require('request');
 
 const readlineSync = require('readline-sync');
 const cron = require('node-cron');
-
+const testff = require('./test');
 const message = 'enter password: ';
 const options = {
     hideEchoBack: true,
@@ -13,8 +13,15 @@ const options = {
 const id = readlineSync.question('enter id: ');
 const answer = readlineSync.question(message, options);
 
+<<<<<<< HEAD
 // cron.schedule('*/1 * * * *', () => {
 example(id, answer);
+=======
+console.log(testff.test());
+
+// cron.schedule('*/1 * * * *', () => {
+    example(id, answer);
+>>>>>>> af544617ecf67520eb96ae8c153ca0bd7b8815f9
 // })
 
 /*
