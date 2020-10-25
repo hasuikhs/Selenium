@@ -13,15 +13,12 @@ const options = {
 const id = readlineSync.question('enter id: ');
 const answer = readlineSync.question(message, options);
 
-<<<<<<< HEAD
-// cron.schedule('*/1 * * * *', () => {
-example(id, answer);
-=======
-console.log(testff.test());
 
 // cron.schedule('*/1 * * * *', () => {
-    example(id, answer);
->>>>>>> af544617ecf67520eb96ae8c153ca0bd7b8815f9
+example(id, answer);
+
+console.log(testff.test());
+
 // })
 
 /*
