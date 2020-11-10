@@ -4,6 +4,8 @@
   "description": " ",
   "main": "index.js",
   "dependencies": {
+    "google-spreadsheet": "^3.0.13",
+    "googleapis": "^39.2.0",
     "node-cron": "^2.0.3",
     "readline-sync": "^1.4.10",
     "request": "^2.88.2",
@@ -13,7 +15,7 @@
     "nexe": "^3.3.7"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "start node index.js",
     "build": "nexe"
   },
   "author": "hskim",
