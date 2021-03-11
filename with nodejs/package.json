@@ -1,23 +1,16 @@
 {
-  "name": "selenium-app",
+  "name": "with-nodejs",
   "version": "1.0.0",
-  "description": " ",
+  "description": "",
   "main": "index.js",
-  "dependencies": {
-    "google-spreadsheet": "^3.0.13",
-    "googleapis": "^39.2.0",
-    "node-cron": "^2.0.3",
-    "readline-sync": "^1.4.10",
-    "request": "^2.88.2",
-    "selenium-webdriver": "^4.0.0-alpha.7"
-  },
-  "devDependencies": {
-    "nexe": "^3.3.7"
-  },
   "scripts": {
-    "start": "start node index.js",
-    "build": "nexe"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "hskim",
-  "license": "MIT"
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chromedriver": "^89.0.0",
+    "dotenv": "^8.2.0",
+    "selenium-webdriver": "^4.0.0-beta.1"
+  }
 }
