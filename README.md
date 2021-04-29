@@ -3,8 +3,8 @@
 ## 0. Selenium?
 
 - Selenium은 여러 언어에서 웹 드라이버를 통해 웹 자동화 테스트 혹은 웹 자동화를 도와주는 라이브러리
-
 - 즉, 다양한 플랫폼에서 **브라우저 자동화**를 지원해주는 라이브러리
+- [문서](https://www.selenium.dev/documentation/ko/introduction/)
 
 ### 0.1 지원 브라우저
 
