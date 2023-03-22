@@ -1,13 +1,10 @@
-require('dotenv').config({path: '../.env'});
-const { Scrapper } = require('./class/Scrapper');
-const { getYesterdayDate } = require('./functions/common');
+import Scrapper from './class/Scrapper.js';
+import { getYesterdayDate } from './functions/common.js';
 
 (async () => {
+  console.log('hi')
+  // let target = new Scrapper();
+  // let waitTime = 20000;
 
-    let target = new Scrapper();
-    let waitTime = 20000;
-
-    await target.moveSite('target site');
-    await target.login('idElementName', 'pwElementName', process.env.id, process.env.pw);
-
-})()
+  // await target.moveSite('https://www.naver.com');
+})();
