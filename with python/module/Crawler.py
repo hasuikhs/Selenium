@@ -10,7 +10,7 @@ class Crawler:
 
     def __init__(self, chrome_driver_path):
         self._options = webdriver.ChromeOptions()
-        self._options.add_argument('--headless')
+        # self._options.add_argument('--headless')
         self._options.add_argument('--no-sandbox')
         self._options.add_argument('--disabled-gpu')
         self._options.add_argument('--disabled-dev-shm-usage')
