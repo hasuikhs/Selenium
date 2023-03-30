@@ -1,4 +1,4 @@
-import os
+import os, time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -27,10 +27,11 @@ class Crawler:
     def move_site(self, site_url):
         return self._driver.get(site_url)
 
-    def login(self, id_xpath, pw_xpath, user_id, user_pw):
-        self._driver.find_element_by_xpath(id_xpath).send_keys(user_id)
-        self._driver.find_element_by_xpath(pw_xpath).send_keys(user_pw)
-        self._driver.find_element_by_xpath(pw_xpath).send_keys(Keys.RETURN)
+    def login(self, id_selector, pw_selector, user_id, user_pw):
+        time.sleep(1)
+        self._driver.find_element(By.CSS_SELECTOR, id_selector).send_keys(user_id)
+        self._driver.find_element(By.CSS_SELECTOR, pw_selector).send_keys(user_pw)
+        self._driver.find_element(By.CSS_SELECTOR, pw_selector).send_keys(Keys.RETURN)
 
     def get_element_by_xpath_with_explicit_wait_millis(self, xpath, explicit_wait_second):
         WebDriverWait(self._driver, explicit_wait_second).until(
