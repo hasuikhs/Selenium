@@ -14,9 +14,6 @@ target.move_site(target_url)
 LOGIN_ID = os.getenv('USER_ID')
 LOGIN_PW = os.getenv('USER_PASSWORD')
 
-print(LOGIN_ID)
-print(LOGIN_PW)
-
-target.login('#loginForm > div > div:nth-child(1) > div > label > input', '#loginForm > div > div:nth-child(2) > div > label > input', LOGIN_ID, LOGIN_PW)
+target.login('#loginForm > div > div:nth-child(1) > div > label > input', '#loginForm > div > div:nth-child(2) > div > label > input', LOGIN_ID, LOGIN_PW, wait_time)
 
 time.sleep(10)

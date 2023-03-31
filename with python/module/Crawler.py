@@ -27,11 +27,14 @@ class Crawler:
     def move_site(self, site_url):
         return self._driver.get(site_url)
 
-    def login(self, id_selector, pw_selector, user_id, user_pw):
-        time.sleep(1)
-        self._driver.find_element(By.CSS_SELECTOR, id_selector).send_keys(user_id)
-        self._driver.find_element(By.CSS_SELECTOR, pw_selector).send_keys(user_pw)
-        self._driver.find_element(By.CSS_SELECTOR, pw_selector).send_keys(Keys.RETURN)
+    def login(self, id_selector, pw_selector, user_id, user_pw, wait_time):
+        # time.sleep(1)
+        # self._driver.find_element(By.CSS_SELECTOR, id_selector).send_keys(user_id)
+        # self._driver.find_element(By.CSS_SELECTOR, pw_selector).send_keys(user_pw)
+        # self._driver.find_element(By.CSS_SELECTOR, pw_selector).send_keys(Keys.RETURN)
+        self.find_clickable(id_selector, wait_time).send_keys(user_id)
+        self.find_clickable(pw_selector, wait_time).send_keys(user_pw)
+        self.find_clickable(pw_selector, wait_time).send_keys(Keys.RETURN)
 
     def get_element_with_explicit_wait_millis(self, selector, explicit_wait_second):
         WebDriverWait(self._driver, explicit_wait_second).until(
@@ -45,7 +48,8 @@ class Crawler:
 
     def check_clickable_and_click_element(self, selector, wait_time):
         WebDriverWait(self._driver, wait_time).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, selector))).send_keys(Keys.ENTER)
+            EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
+        ).send_keys(Keys.ENTER)
 
     def find_clickable(self, selector, explicit_wait_second):
         element = WebDriverWait(self._driver, explicit_wait_second).until(
