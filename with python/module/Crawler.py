@@ -33,31 +33,29 @@ class Crawler:
         self._driver.find_element(By.CSS_SELECTOR, pw_selector).send_keys(user_pw)
         self._driver.find_element(By.CSS_SELECTOR, pw_selector).send_keys(Keys.RETURN)
 
-    def get_element_by_xpath_with_explicit_wait_millis(self, xpath, explicit_wait_second):
+    def get_element_with_explicit_wait_millis(self, selector, explicit_wait_second):
         WebDriverWait(self._driver, explicit_wait_second).until(
-            EC.presence_of_element_located((By.XPATH, xpath)))
-        return self._driver.find_element_by_xpath(xpath)
+            EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
+        return self._driver.find_element(By.CSS_SELECTOR, selector)
 
-    def get_clickableElement_by_xpath_with_explicit_wait_millis(self, xpath, explicit_wait_second):
+    def get_clickable_element_with_explicit_wait_millis(self, selector, explicit_wait_second):
         WebDriverWait(self._driver, explicit_wait_second).until(
-            EC.element_to_be_clickable((By.XPATH, xpath)))
-        return self._driver.find_element_by_xpath(xpath)
+            EC.element_to_be_clickable((By.CSS_SELECTOR, selector)))
+        return self._driver.find_element(By.CSS_SELECTOR, selector)
 
-    def check_clickable_and_click_element(self, xpath, wait_time):
+    def check_clickable_and_click_element(self, selector, wait_time):
         WebDriverWait(self._driver, wait_time).until(
-            EC.element_to_be_clickable((By.XPATH, xpath))).send_keys(Keys.ENTER)
+            EC.element_to_be_clickable((By.CSS_SELECTOR, selector))).send_keys(Keys.ENTER)
 
-    def find_clickable(self, xpath, explicit_wait_second):
+    def find_clickable(self, selector, explicit_wait_second):
         element = WebDriverWait(self._driver, explicit_wait_second).until(
-            EC.element_to_be_clickable(
-                (By.XPATH, xpath))
+            EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
         )
         return element
 
-    def find_clickable_and_click(self, xpath, explicit_wait_second):
+    def find_clickable_and_click(self, selector, explicit_wait_second):
         element = WebDriverWait(self._driver, explicit_wait_second).until(
-            EC.element_to_be_clickable(
-                (By.XPATH, xpath))
+            EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
         )
         self._driver.execute_script("arguments[0].click();", element)
 
