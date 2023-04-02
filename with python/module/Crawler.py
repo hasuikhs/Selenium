@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class Crawler:
 
-    def __init__(self, chrome_driver_path):
+    def __init__(self, chrome_driver_path, wait_time):
         self._options = webdriver.ChromeOptions()
         # self._options.add_argument('--headless')
         self._options.add_argument('--no-sandbox')
@@ -22,35 +22,47 @@ class Crawler:
         })
         self._driver = webdriver.Chrome(
             executable_path=chrome_driver_path, chrome_options=self._options)
-        self._driver.maximize_window()
+        # self._driver.maximize_window()
+
+        self._time = wait_time
 
     def move_site(self, site_url):
         return self._driver.get(site_url)
 
-    def login(self, id_selector, pw_selector, user_id, user_pw, wait_time):
-        self.find_clickable(id_selector, wait_time).send_keys(user_id)
-        self.find_clickable(pw_selector, wait_time).send_keys(user_pw)
-        self.find_clickable(pw_selector, wait_time).send_keys(Keys.RETURN)
+    def submit_arrow_right(self):
+        self.find_clickable('body').send_keys(Keys.ARROW_RIGHT)
 
-    def get_element_with_explicit_wait_millis(self, selector, explicit_wait_second):
-        WebDriverWait(self._driver, explicit_wait_second).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
+    def submit_input(self, selector, keyword):
+        self.find_clickable(selector).send_keys(keyword)
+        self.find_clickable(selector).send_keys(Keys.RETURN)
+
+    def login(self, id_selector, pw_selector, user_id, user_pw):
+        self.find_clickable(id_selector).send_keys(user_id)
+        self.submit_input(pw_selector, user_pw)
+
+    def get_located_element(self, selector):
+        WebDriverWait(self._driver, self._time).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, selector))
+        )
         return self._driver.find_element(By.CSS_SELECTOR, selector)
 
-    def find_clickable(self, selector, explicit_wait_second):
-        element = WebDriverWait(self._driver, explicit_wait_second).until(
+    def get_parent_element(self, element):
+        return element.find_element(By.XPATH, '..')
+
+    def find_clickable(self, selector):
+        element = WebDriverWait(self._driver, self._time).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
         )
         return element
 
-    def find_clickable_and_click(self, selector, explicit_wait_second):
-        element = WebDriverWait(self._driver, explicit_wait_second).until(
+    def find_clickable_and_click(self, selector):
+        element = WebDriverWait(self._driver, self._time).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
         )
         self._driver.execute_script("arguments[0].click();", element)
 
-    def wait_implicit_time(self, second):
-        self._driver.implicitly_wait(second)
+    def wait_implicit_time(self):
+        self._driver.implicitly_wait(self._time)
 
     def get_page_source(self):
         return self._driver.page_source
