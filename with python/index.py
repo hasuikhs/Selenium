@@ -1,13 +1,17 @@
 import os, time
 from module import Crawler
 from dotenv import load_dotenv
+import pandas as pd
+from util import transform_str_to_int
 
 load_dotenv()
 
 WAIT_TIME = 60
 
 ## 1. input keyword
-keyword = input()
+INPUT_KEYWORD = input('검색할 키워드 입력: ')
+LIMIT_CNT = input('총 아이디 개수 입력: ')
+LIMIT_FOLLOWER = int(input('팔로우수 하한선 입력: '))
 
 ## 2. open browser
 target = Crawler('./chromedriver', WAIT_TIME)
@@ -34,26 +38,53 @@ target.login(ID_SELECTOR, PW_SELECTOR, LOGIN_ID, LOGIN_PW)
 
 # target.submit_input(SEARCH_INPUT, keyword)
 time.sleep(5)
-SEARCH_URL = f'https://www.instagram.com/explore/tags/{ keyword }/'
+SEARCH_URL = f'https://www.instagram.com/explore/tags/{ INPUT_KEYWORD }/'
 target.move_site(SEARCH_URL)
 
+## 5. open board
 time.sleep(5)
 FIRST_TARGET = 'article > div > div > div > div > div > a'
 target.find_clickable(FIRST_TARGET).click()
 
+### 5.1 create dataframe
+df = pd.DataFrame({
+  '번호': [],
+  'id': [],
+  '팔로우': [],
+  'link': [],
+})
+
 TEXT_ELEMENT = 'article header div:nth-child(2) > div > div span a'
+FOLLOW_ELEMNT = 'span[style="line-height: 18px;"]'
 
 id_set = set([])
 
-for i in range(1000):
-  time.sleep(0.2)
-  id = target.get_located_element(TEXT_ELEMENT).text
-  id_set.add(id)
-  print(i, id)
-  target.submit_arrow_right()
+main_index = 1
+index = 1
+try:
+  while len(id_set) < int(LIMIT_CNT):
+    time.sleep(0.3)
+    id = target.get_located_element(TEXT_ELEMENT).text
+    target.hover_element(TEXT_ELEMENT)
+    time.sleep(1.5)
+    
+    try:
+      follower = transform_str_to_int(target.get_elements(FOLLOW_ELEMNT)[4].text)
+    except:
+      follower = transform_str_to_int(target.get_elements(FOLLOW_ELEMNT)[5].text)
 
+    print(follower, LIMIT_FOLLOWER)
+    if follower >= LIMIT_FOLLOWER:
+      id_set.add(id)
+      df.loc[len(df)] = [index, id, follower, f'https://www.instagram.com/{ id }']
+      index = index + 1
 
-print(id_set)
-print(len(id_set))
-### chrome wait
-time.sleep(1000)
+    main_index = main_index + 1
+
+    print(f'총 시도: { main_index }, 현재 들어간 횟수: { index }')
+    target.submit_arrow_right()
+
+finally:
+  df.to_csv('result.csv')
+
+target.quit_driver()

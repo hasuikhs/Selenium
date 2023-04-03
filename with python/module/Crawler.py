@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+from selenium.webdriver.common.action_chains import ActionChains
 
 class Crawler:
 
@@ -32,6 +32,11 @@ class Crawler:
     def submit_arrow_right(self):
         self.find_clickable('body').send_keys(Keys.ARROW_RIGHT)
 
+    def hover_element(self, selector):
+        el = self.get_located_element(selector)
+        a = ActionChains(self._driver)
+        a.move_to_element(el).perform()
+
     def submit_input(self, selector, keyword):
         self.find_clickable(selector).send_keys(keyword)
         self.find_clickable(selector).send_keys(Keys.RETURN)
@@ -48,6 +53,9 @@ class Crawler:
 
     def get_parent_element(self, element):
         return element.find_element(By.XPATH, '..')
+
+    def get_elements(self, selector):
+        return self._driver.find_elements(By.CSS_SELECTOR, selector)
 
     def find_clickable(self, selector):
         element = WebDriverWait(self._driver, self._time).until(
