@@ -24,7 +24,15 @@ class Crawler:
             executable_path=chrome_driver_path, chrome_options=self._options)
         # self._driver.maximize_window()
 
+        self._driver_path = chrome_driver_path
         self._time = wait_time
+
+    def __enter__(self):
+        self.driver = webdriver.Chrome(self._driver_path)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.driver.quit()
 
     def move_site(self, site_url):
         return self._driver.get(site_url)
@@ -83,6 +91,3 @@ class Crawler:
 
     def get_current_url(self):
         return self._driver.current_url
-
-    def quit_driver(self):
-        self._driver.quit()
