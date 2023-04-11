@@ -10,7 +10,7 @@ class Crawler:
 
     def __init__(self, chrome_driver_path, wait_time):
         self._options = webdriver.ChromeOptions()
-        # self._options.add_argument('--headless')
+        self._options.add_argument('--headless')
         self._options.add_argument('--no-sandbox')
         self._options.add_argument('--disabled-gpu')
         self._options.add_argument('--disabled-dev-shm-usage')
@@ -22,7 +22,7 @@ class Crawler:
         })
         self._driver = webdriver.Chrome(
             executable_path=chrome_driver_path, chrome_options=self._options)
-        # self._driver.maximize_window()
+        self._driver.maximize_window()
 
         self._driver_path = chrome_driver_path
         self._time = wait_time
