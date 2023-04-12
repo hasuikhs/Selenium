@@ -21,15 +21,14 @@ class Crawler:
             'directory_upgrade': True,
             'safebrowsing.enabled': True
         })
-        self._driver = webdriver.Chrome(
-            executable_path=chrome_driver_path, chrome_options=self._options)
-        self._driver.maximize_window()
 
         self._driver_path = chrome_driver_path
         self._time = wait_time
 
     def __enter__(self):
-        self._driver = webdriver.Chrome(self._driver_path, chrome_options=self._options)
+        self._driver = webdriver.Chrome(
+            executable_path=self._driver_path, chrome_options=self._options)
+        self._driver.maximize_window()
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
