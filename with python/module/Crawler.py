@@ -14,6 +14,7 @@ class Crawler:
         self._options.add_argument('--no-sandbox')
         self._options.add_argument('--disabled-gpu')
         self._options.add_argument('--disabled-dev-shm-usage')
+        self._options.add_argument('--disable-usb-devices')
         self._options.add_experimental_option('prefs', {
             'download.default_directory': './',
             'download.prompt_for_download': False,
@@ -28,11 +29,11 @@ class Crawler:
         self._time = wait_time
 
     def __enter__(self):
-        self.driver = webdriver.Chrome(self._driver_path)
+        self._driver = webdriver.Chrome(self._driver_path, chrome_options=self._options)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.driver.quit()
+        self._driver.quit()
 
     def move_site(self, site_url):
         return self._driver.get(site_url)
