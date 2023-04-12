@@ -6,8 +6,12 @@ def transform_str_to_int(str):
     num = float(str[:-1]) * 10_000
   elif '억' in str:
     num = float(str[:-1]) * 100_000_000
+  elif 'K' in str:
+    num = float(str[:-1]) * 1_000
+  elif 'M' in str:
+    num = float(str[:-1]) * 1_000_000
   else:
-    num = float(str)
+    num = float(str.replace(',', ''))
 
   return num
 

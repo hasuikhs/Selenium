@@ -1,4 +1,4 @@
-import os, time, datetime as dt
+import os, time, logging, datetime as dt
 from module import Crawler
 from dotenv import load_dotenv
 import pandas as pd
@@ -12,6 +12,22 @@ WAIT_TIME_SEC = 60
 SEARCH_KEYWORD = input('검색할 키워드 입력: ')
 MAX_ID_COUNT = int(input('총 아이디 개수 입력: '))
 MIN_FOLLOWER_COUNT = int(input('팔로우수 하한선 입력: '))
+
+### 1.1 로그 파일 이름과 경로 설정
+log_filename = 'error.log'
+log_path = './'
+
+log_format = '%(asctime)s - %(levelname)s - %(message)s'
+log_level = logging.ERROR
+
+logger = logging.getLogger(__name__)
+logger.setLevel(log_level)
+
+file_handler = logging.FileHandler(filename=log_path + log_filename)
+file_handler.setLevel(log_level)
+file_handler.setFormatter(logging.Formatter(log_format))
+
+logger.addHandler(file_handler)
 
 ## 2. 폴더 생성 및 기존 파일 읽기
 dir_path = os.getcwd() + '/results/'
@@ -71,15 +87,21 @@ with Crawler('./chromedriver', WAIT_TIME_SEC) as target:
       target.hover_element(USER_ID_SELECTOR)
       time.sleep(4)
 
+      hover_element = target.get_elements(FOLLOWER_COUNT_SELECTOR)
+      target_index = 4
+      for element_index, element in enumerate(hover_element):
+        if element.text in ['followers', '팔로워'] and element_index > 3:
+          target_index = element_index - 1
+
       try:
-        follower = transform_str_to_int(target.get_elements(FOLLOWER_COUNT_SELECTOR)[4].text)
-      except:
-        follower = transform_str_to_int(target.get_elements(FOLLOWER_COUNT_SELECTOR)[5].text)
+        follower = transform_str_to_int(hover_element[target_index].text)
+      except Exception as e:
+        logger.error(str(e))
 
       if follower >= MIN_FOLLOWER_COUNT and id not in id_set_list and id not in new_id_set_list and 'official' not in id:
         new_id_set_list.add(id)
         index = index + 1
-        result_df.loc[len(result_df)] = [index, id, f'https://www.instagram.com/{ id }', follower]
+        result_df.loc[len(result_df)] = [index, id, f'https://www.instagram.com/{ id }/', follower]
 
       main_index = main_index + 1
 
