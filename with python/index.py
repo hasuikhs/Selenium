@@ -14,8 +14,8 @@ MAX_ID_COUNT = int(input('총 아이디 개수 입력: '))
 MIN_FOLLOWER_COUNT = int(input('팔로우수 하한선 입력: '))
 
 ### 1.1 로그 파일 이름과 경로 설정
+dir_path = os.getcwd() + '/results/'
 log_filename = 'error.log'
-log_path = './'
 
 log_format = '%(asctime)s - %(levelname)s - %(message)s'
 log_level = logging.ERROR
@@ -23,14 +23,13 @@ log_level = logging.ERROR
 logger = logging.getLogger(__name__)
 logger.setLevel(log_level)
 
-file_handler = logging.FileHandler(filename=log_path + log_filename)
+file_handler = logging.FileHandler(filename=dir_path + '/../error.log')
 file_handler.setLevel(log_level)
 file_handler.setFormatter(logging.Formatter(log_format))
 
 logger.addHandler(file_handler)
 
 ## 2. 폴더 생성 및 기존 파일 읽기
-dir_path = os.getcwd() + '/results/'
 os.makedirs(dir_path, exist_ok=True)
 
 csv_file_list = [file for file in os.listdir(dir_path) if file.endswith('.csv')]
