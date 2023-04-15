@@ -111,3 +111,5 @@ with Crawler('./chromedriver', WAIT_TIME_SEC) as target:
   finally:
     now = dt.datetime.now().strftime('%Y-%m-%d_%H%M')
     result_df.to_csv(dir_path + f'result_{ SEARCH_KEYWORD }_{ now }.csv', index=False)
+
+print('Process End!')
