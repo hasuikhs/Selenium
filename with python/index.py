@@ -37,15 +37,19 @@ csv_file_list = [file for file in os.listdir(dir_path) if file.endswith('.csv')]
 if not csv_file_list:
   result_df = pd.DataFrame(columns=['num', 'id', 'link', 'follwers'])
 else:
-  result_df = pd.concat([pd.read_csv(os.path.join(dir_path, file)) for file in csv_file_list])
+  result_df = pd.concat([pd.read_csv(os.path.join(dir_path, file), encoding_errors='ignore') for file in csv_file_list])
 
 origin_id_set_list = set(result_df['id'])
 
 id_set_list = set([])
+
 for id in origin_id_set_list:
-  if 'instagram.com' in id:
-    id = id.split('instagram.com/')[1].split('/')[0]
-  id_set_list.add(id)
+  if pd.isna(id):
+    continue
+  else:
+    if 'instagram.com' in str(id):
+      id = id.split('instagram.com/')[1].split('/')[0].split('?')[0]
+    id_set_list.add(id)
 
 ## 3. open browser
 with Crawler('./chromedriver', WAIT_TIME_SEC) as target:

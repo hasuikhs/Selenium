@@ -11,8 +11,8 @@ class Crawler:
     self._options = webdriver.ChromeOptions()
     self._options.add_argument('--headless')
     self._options.add_argument('--no-sandbox')
-    self._options.add_argument('--disabled-gpu')
-    self._options.add_argument('--disabled-dev-shm-usage')
+    self._options.add_argument('--disable-gpu')
+    self._options.add_argument('--disable-dev-shm-usage')
     self._options.add_argument('--disable-usb-devices')
     self._options.add_experimental_option('prefs', {
       'download.default_directory': './',
