@@ -39,7 +39,14 @@ if not csv_file_list:
 else:
   result_df = pd.concat([pd.read_csv(os.path.join(dir_path, file)) for file in csv_file_list])
 
-id_set_list = set(result_df['id'])
+origin_id_set_list = set(result_df['id'])
+
+id_set_list = set([])
+for id in origin_id_set_list:
+  if 'instagram.com' in id:
+    id = id.split('instagram.com/')[1].split('/')[0]
+  id_set_list.add(id)
+
 ## 3. open browser
 with Crawler('./chromedriver', WAIT_TIME_SEC) as target:
   TARGET_URL = 'https://www.instagram.com/'
@@ -112,4 +119,4 @@ with Crawler('./chromedriver', WAIT_TIME_SEC) as target:
     now = dt.datetime.now().strftime('%Y-%m-%d_%H%M')
     result_df.to_csv(dir_path + f'result_{ SEARCH_KEYWORD }_{ now }.csv', index=False)
 
-print('Process End!')
+print('Process  End!')
