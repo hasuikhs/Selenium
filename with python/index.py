@@ -92,7 +92,7 @@ with Crawler('./chromedriver', WAIT_TIME_SEC) as target:
   index = 0
   try:
     while len(new_id_set_list) < MAX_ID_COUNT:
-      time.sleep(1)
+      time.sleep(3)
       id = target.get_located_element(USER_ID_SELECTOR).text
       target.hover_element(USER_ID_SELECTOR)
       time.sleep(4)
