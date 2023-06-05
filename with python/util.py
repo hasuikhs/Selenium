@@ -15,13 +15,20 @@ def transform_str_to_int(str):
 
   return num
 
-def print_progress(iteration, total, try_cnt, prefix = '', suffix = '', decimals = 1, bar_length  = 100):
-  format_str = "{0:." + str(decimals) + "f}"
-  percent = format_str.format(100 * (iteration / float(total)))
-  filled_length = int(round(bar_length * iteration / float(total)))
-  bar = '#' * filled_length + '-' * (bar_length - filled_length)
+def print_progress(iteration, total, start_time, prefix='', suffix='', decimals=1, bar_length=100):
+    format_str = "{0:." + str(decimals) + "f}"
+    percent = format_str.format(100 * (iteration / float(total)))
+    filled_length = int(round(bar_length * iteration / float(total)))
+    bar = '#' * filled_length + '-' * (bar_length - filled_length)
 
-  sys.stdout.write('\r%s |%s| %s%s %s [%s/%s] [try: %s]' % (prefix, bar, percent, '%', suffix, iteration, total, try_cnt)),
-  if iteration == total:
-    sys.stdout.write('\n')
-  sys.stdout.flush()
+    elapsed_time = time.time() - start_time
+    hours = int(elapsed_time // 3600)
+    minutes = int((elapsed_time % 3600) // 60)
+    seconds = int(elapsed_time % 60)
+
+    elapsed_time_str = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+
+    sys.stdout.write('\r%s |%s| %s%s %s [%s/%s], Elapsed Time: %s' % (prefix, bar, percent, '%', suffix, iteration, total, elapsed_time_str))
+    if iteration == total:
+        sys.stdout.write('\n')
+    sys.stdout.flush()
