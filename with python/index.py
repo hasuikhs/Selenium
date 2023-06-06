@@ -1,4 +1,4 @@
-import os, time, logging, datetime as dt
+import os, time, logging, datetime as dt, time
 from module import Crawler
 from dotenv import load_dotenv
 import pandas as pd
@@ -50,6 +50,8 @@ for id in origin_id_set_list:
     if 'instagram.com' in str(id):
       id = id.split('instagram.com/')[1].split('/')[0].split('?')[0]
     id_set_list.add(id)
+
+start_time = time.time()
 
 ## 3. open browser
 with Crawler('./chromedriver', WAIT_TIME_SEC) as target:
@@ -115,7 +117,7 @@ with Crawler('./chromedriver', WAIT_TIME_SEC) as target:
 
       main_index = main_index + 1
 
-      print_progress(index, MAX_ID_COUNT, main_index, 'Progress:', 'Complete', 1, 50)
+      print_progress(index, MAX_ID_COUNT, start_time, main_index, 'Progress:', 'Complete', 1, 50)
       target.submit_arrow_right()
 
   ### 7.1 도중 오류 발생해도 파일 생성
