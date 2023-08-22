@@ -29,7 +29,7 @@ def print_progress(iteration, total, start_time, try_cnt, prefix='', suffix='', 
 
   elapsed_time_str = f"{hours:02d}:{minutes:02d}:{seconds:02d}:{milliseconds:03d}"
 
-  sys.stdout.write('\r%s |%s| %s%s %s [%s/%s] [try: %s], Elapesed Time: %s' % (prefix, bar, percent, '%', suffix, iteration, total, try_cnt, elapsed_time_str))
+  sys.stdout.write('\r%s |%s| %s%s %s [%s/%s] [try: %s], Elapesed Time: %s' % (prefix, bar, percent, '%', suffix, format(iteration, ','), format(total, ','), format(try_cnt, ','), elapsed_time_str))
   if iteration == total:
     sys.stdout.write('\n')
   sys.stdout.flush()

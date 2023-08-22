@@ -14,12 +14,16 @@ class Crawler:
     self.chrome_options.add_argument('--disable-gpu')
     self.chrome_options.add_argument('--disable-dev-shm-usage')
     self.chrome_options.add_argument('--disable-usb-devices')
+    self.chrome_options.add_argument('--disable-logging')
+    self.chrome_options.add_argument('--log-level=3')
+    self.chrome_options.add_argument('--ignore-certificate-errors')
     self.chrome_options.add_experimental_option('prefs', {
       'download.default_directory': './',
       'download.prompt_for_download': False,
       'directory_upgrade': True,
       'safebrowsing.enabled': True
     })
+    self.chrome_options.add_experimental_option('extensionLoadTimeout', 600000)
 
     self.chrome_driver_path = chrome_driver_path
     self.wait_time = wait_time
