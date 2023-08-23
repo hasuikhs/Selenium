@@ -31,6 +31,7 @@ def print_progress(iteration, total, start_time, try_cnt, prefix='', suffix='', 
 
   if iteration > 0:
     time_per_iteration = elapsed_time / iteration
+
     remaining_time = time_per_iteration * (total -iteration)
     remaining_hours = int(remaining_time // 3600)
     remaining_minutes = int((remaining_time % 3600) // 60)
@@ -39,11 +40,11 @@ def print_progress(iteration, total, start_time, try_cnt, prefix='', suffix='', 
 
     remaining_time_str = f"{remaining_hours:02d}:{remaining_minutes:02d}:{remaining_seconds:02d}:{remaining_millseconds:03d}"
 
-    avg_time_per_iteration = elapsed_time / iteration
-    avg_seconds = int(avg_time_per_iteration % 60)
-    avg_millseconds = int((avg_time_per_iteration % 1) * 1000)
 
-    avg_time_str = f"{avg_seconds:02d}:{avg_millseconds:03d}"
+    avg_seconds = int(time_per_iteration % 60)
+    avg_millseconds = int((time_per_iteration % 1) * 1000)
+
+    avg_time_str = f"{avg_seconds:02d}.{avg_millseconds:03d}s"
   else:
     remaining_time_str = "Calculating..."
     avg_time_str = "..."
