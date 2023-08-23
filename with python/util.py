@@ -29,7 +29,26 @@ def print_progress(iteration, total, start_time, try_cnt, prefix='', suffix='', 
 
   elapsed_time_str = f"{hours:02d}:{minutes:02d}:{seconds:02d}:{milliseconds:03d}"
 
-  sys.stdout.write('\r%s |%s| %s%s %s [%s/%s] [try: %s], Elapesed Time: %s' % (prefix, bar, percent, '%', suffix, format(iteration, ','), format(total, ','), format(try_cnt, ','), elapsed_time_str))
+  if iteration > 0:
+    time_per_iteration = elapsed_time / iteration
+    remaining_time = time_per_iteration * (total -iteration)
+    remaining_hours = int(remaining_time // 3600)
+    remaining_minutes = int((remaining_time % 3600) // 60)
+    remaining_seconds = int(remaining_time % 60)
+    remaining_millseconds = int((remaining_time % 1) * 1000)
+
+    remaining_time_str = f"{remaining_hours:02d}:{remaining_minutes:02d}:{remaining_seconds:02d}:{remaining_millseconds:03d}"
+
+    avg_time_per_iteration = elapsed_time / iteration
+    avg_seconds = int(avg_time_per_iteration % 60)
+    avg_millseconds = int((avg_time_per_iteration % 1) * 1000)
+
+    avg_time_str = f"{avg_seconds:02d}:{avg_millseconds:03d}"
+  else:
+    remaining_time_str = "Calculating..."
+    avg_time_str = "..."
+
+  sys.stdout.write('\r%s |%s| %s%s %s [%s/%s] [try: %s], Elapesed Time: %s, Remaining Time: %s, Avg Time: %s' % (prefix, bar, percent, '%', suffix, format(iteration, ','), format(total, ','), format(try_cnt, ','), elapsed_time_str, remaining_time_str, avg_time_str))
   if iteration == total:
     sys.stdout.write('\n')
   sys.stdout.flush()
