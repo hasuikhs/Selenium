@@ -23,7 +23,6 @@ class Crawler:
       'directory_upgrade': True,
       'safebrowsing.enabled': True
     })
-    self.chrome_options.add_experimental_option('extensionLoadTimeout', 600000)
 
     self.chrome_driver_path = chrome_driver_path
     self.wait_time = wait_time
