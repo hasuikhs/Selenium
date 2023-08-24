@@ -5,6 +5,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 class Crawler:
   def __init__(self, chrome_driver_path, wait_time):
@@ -28,8 +30,9 @@ class Crawler:
     self.wait_time = wait_time
 
   def __enter__(self):
+    service = Service(executable_path=ChromeDriverManager().install())
     self.driver = webdriver.Chrome(
-      executable_path=self.chrome_driver_path, options=self.chrome_options)
+      service=service, options=self.chrome_options)
     self.driver.maximize_window()
     self.driver.implicitly_wait(self.wait_time)
     return self
